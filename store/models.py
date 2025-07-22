@@ -38,6 +38,12 @@ class Customer(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     membership = models.CharField(max_length=1, choices = MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
+    class Meta:
+        db_table = 'store customers'
+        indexes = [
+            models.Index(fields=['last_name','first_name'])
+        ]
+
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = "P"
@@ -75,36 +81,4 @@ class Cart_items(models.Model):
     cart = models.ForeignKey(Cart, on_delete= models.CASCADE)
     product = models.ForeignKey(Product, on_delete= models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
-
-# class Customer(models.Model):
-#     MEMBERSHIP_BRONZE = "B"
-#     MEMBERSHIP_SILVER = "S"
-#     MEMBERSHIP_GOLD = "G"
-
-#     MEMBERSHIP_CHOICES = [
-#         (MEMBERSHIP_BRONZE,"BRONZE")
-#         (MEMBERSHIP_SILVER, "SILVER")
-#         (MEMBERSHIP_GOLD, "GOLD")
-#     ]
-
-#     first_name = models.CharField(max_length=255)
-#     last_name = models.CharField(max_length=255)
-#     email = models.EmailField(unique= True)
-#     phone = models.CharField(max_length=15)
-#     birth_date = models.DateField(null= True)
-#     membership = models.CharField(max_length=10, choices=MEMBERSHIP_CHOICES, default= MEMBERSHIP_BRONZE)
-
-# class Order(models.Model):
-#     PAYMENT_PENDING = "P"
-#     PAYMENT_COMPLETED = "C"
-#     PAYMENT_FAILED = "F"
-
-#     PAYMENT_STATUS_CHOICES = [
-#         (PAYMENT_PENDING,"Pending")
-#         (PAYMENT_COMPLETED,"Completed")
-#         (PAYMENT_FAILED,"Failed")
-#     ]
-
-#     placed_at = models.DateTimeField(auto_now_add= True)
-#     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default= PAYMENT_PENDING)
 
